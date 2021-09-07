@@ -1,9 +1,6 @@
 // Немного усложнил себе задачу, аргументов может быть больше двух
-const sum = function(a, b) {
-  // eslint-disable-next-line prefer-rest-params
-  const arr = [...arguments];
-
-  if (arr.some((value) => typeof value !== 'number')) {
+const sum = (...args) => {
+  if (args.some((value) => typeof value !== 'number')) {
     throw new TypeError('Один или несколько аргументов не являются числами');
   }
 
@@ -11,11 +8,11 @@ const sum = function(a, b) {
   // return a + b;
 
   // классика
-  // return arr.reduce((sum, cur) => sum + cur);
+  // return args.reduce((sum, cur) => sum + cur);
 
   // Выпендрился :)
   // Оригинальное решение :) так обычно быстрее всего сложить числа из массива
-  return eval(arr.join('+'));
+  return eval(args.join('+'));
 };
 
 module.exports = sum;
