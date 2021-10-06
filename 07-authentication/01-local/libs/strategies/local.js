@@ -3,8 +3,8 @@ const User = require('../../models/User');
 
 module.exports = new LocalStrategy(
     {usernameField: 'email', session: false},
-    async (username, password, done) => {
-      await User.findOne({ email: username }, async (err, user) => {
+    async (email, password, done) => {
+      await User.findOne({ email }, async (err, user) => {
         if (err) return done(err);
         if (!user) return done(null, false, 'Нет такого пользователя');
         
