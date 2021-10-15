@@ -5,28 +5,10 @@ const sendMail = require('../libs/sendMail');
 module.exports.register = async (ctx, next) => {
   const { displayName, email, password } = ctx.request.body;
   const verificationToken = uuid();
-  /*
-  const existingUser = await User.findOne({
-    email,
-  });
-  if (existingUser) {
-    ctx.status = 400;
-    ctx.body = {
-      errors: {
-        email: 'Такой email уже существует',
-      }
-    };
-    return;
-  }
-   */
-  
-  try {
-    const user = new User({email, displayName, verificationToken});
-    await user.setPassword(password);
-    await user.save();
-  } catch (e) {
-    throw e;
-  }
+
+  const user = new User({email, displayName, verificationToken});
+  await user.setPassword(password);
+  await user.save();
   
   await sendMail({
     to: email,
