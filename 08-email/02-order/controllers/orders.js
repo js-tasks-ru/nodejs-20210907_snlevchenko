@@ -1,27 +1,6 @@
 const Order = require('../models/Order');
 const sendMail = require('../libs/sendMail');
-
-const mappedProduct = (obj) => {
-  return {
-    id: obj._id,
-    title: obj.title,
-    images: obj.images,
-    category: obj.category,
-    subcategory: obj.subcategory,
-    price: obj.price,
-    description: obj.description,
-  };
-};
-
-const mappedOrder = (obj) => {
-  return {
-    id: obj._id,
-    user: obj.user,
-    product: mappedProduct(obj.product),
-    phone: obj.phone,
-    address: obj.address,
-  };
-};
+const mapOrder = require('../mappers/order');
 
 module.exports.checkout = async function checkout(ctx, next) {
   const { product, phone, address } = ctx.request.body;
@@ -54,6 +33,6 @@ module.exports.getOrdersList = async function ordersList(ctx, next) {
   }).populate('product');
   ctx.status = 200;
   ctx.body = {
-    orders: orders.map(mappedOrder),
+    orders: orders.map(mapOrder),
   };
 };
