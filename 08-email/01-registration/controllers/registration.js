@@ -19,10 +19,10 @@ module.exports.register = async (ctx, next) => {
     return;
   }
    */
-  const user = new User({email, displayName, verificationToken});
-  await user.setPassword(password);
-
+  
   try {
+    const user = new User({email, displayName, verificationToken});
+    await user.setPassword(password);
     await user.save();
   } catch (e) {
     throw e;
